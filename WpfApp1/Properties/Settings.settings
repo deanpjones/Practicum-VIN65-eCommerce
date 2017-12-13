@@ -1,0 +1,21 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="WpfApp1.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="VIN65WS_Username" Type="System.String" Scope="User">
+      <Value Profile="(Default)">DeanJonesSANDBOX</Value>
+    </Setting>
+    <Setting Name="VIN65WS_Password" Type="System.String" Scope="User">
+      <Value Profile="(Default)">willowpark</Value>
+    </Setting>
+    <Setting Name="XmlPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\_temp</Value>
+    </Setting>
+    <Setting Name="ColorPrimary" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#99B6CC</Value>
+    </Setting>
+    <Setting Name="ColorSecondary" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#3A617F</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
