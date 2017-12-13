@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:impl="http://V300" xmlns:tns2="http://request.base.V300" xmlns:tns4="http://_product.product.V300" xmlns:tns7="http://searchProducts.product.V300" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:tns1="http://getProductDetail.product.V300" xmlns:tns3="http://response.base.V300" xmlns:tns6="http://addUpdateProductDetail.product.V300" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns5="http://rpc.xml.coldfusion" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:intf="http://V300" targetNamespace="http://V300" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://request.base.V300">
+      <xsd:import namespace="http://searchProducts.product.V300" />
+      <xsd:import namespace="http://V300" />
+      <xsd:import namespace="http://getProductDetail.product.V300" />
+      <xsd:import namespace="http://rpc.xml.coldfusion" />
+      <xsd:import namespace="http://_product.product.V300" />
+      <xsd:import namespace="http://addUpdateProductDetail.product.V300" />
+      <xsd:import namespace="http://response.base.V300" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="Security">
+        <xsd:sequence>
+          <xsd:element name="Password" nillable="true" type="xsd:string" />
+          <xsd:element name="Username" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Request">
+        <xsd:sequence>
+          <xsd:element name="Security" nillable="true" type="tns2:Security" />
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://getProductDetail.product.V300">
+      <xsd:import namespace="http://searchProducts.product.V300" />
+      <xsd:import namespace="http://V300" />
+      <xsd:import namespace="http://request.base.V300" />
+      <xsd:import namespace="http://rpc.xml.coldfusion" />
+      <xsd:import namespace="http://_product.product.V300" />
+      <xsd:import namespace="http://addUpdateProductDetail.product.V300" />
+      <xsd:import namespace="http://response.base.V300" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="Request">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns2:Request">
+            <xsd:sequence>
+              <xsd:element name="ProductID" nillable="true" type="xsd:string" />
+              <xsd:element name="SKU" nillable="true" type="xsd:string" />
+              <xsd:element name="WebsiteID" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Response">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns3:Response">
+            <xsd:sequence>
+              <xsd:element name="Product" nillable="true" type="tns4:Product" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://response.base.V300">
+      <xsd:import namespace="http://searchProducts.product.V300" />
+      <xsd:import namespace="http://V300" />
+      <xsd:import namespace="http://request.base.V300" />
+      <xsd:import namespace="http://getProductDetail.product.V300" />
+      <xsd:import namespace="http://rpc.xml.coldfusion" />
+      <xsd:import namespace="http://_product.product.V300" />
+      <xsd:import namespace="http://addUpdateProductDetail.product.V300" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="Error">
+        <xsd:sequence>
+          <xsd:element name="ErrorCode" nillable="true" type="xsd:string" />
+          <xsd:element name="ErrorMessage" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Response">
+        <xsd:sequence>
+          <xsd:element name="Errors" nillable="true" type="intf:ArrayOf_tns3_Error" />
+          <xsd:element name="IsSuccessful" nillable="true" type="xsd:boolean" />
+          <xsd:element name="RecordCount" nillable="true" type="xsd:double" />
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://V300">
+      <xsd:import namespace="http://searchProducts.product.V300" />
+      <xsd:import namespace="http://request.base.V300" />
+      <xsd:import namespace="http://getProductDetail.product.V300" />
+      <xsd:import namespace="http://rpc.xml.coldfusion" />
+      <xsd:import namespace="http://_product.product.V300" />
+      <xsd:import namespace="http://addUpdateProductDetail.product.V300" />
+      <xsd:import namespace="http://response.base.V300" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="ArrayOf_tns3_Error">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns3:Error[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns4_BundleItem">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns4:BundleItem[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns4_Media">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns4:Media[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns4_Photo">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns4:Photo[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns4_Inventory">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns4:Inventory[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns4_Price">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns4:Price[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns4_SKU">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns4:SKU[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns4_VintageNote">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns4:VintageNote[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns7_Product">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns7:Product[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://_product.product.V300">
+      <xsd:import namespace="http://searchProducts.product.V300" />
+      <xsd:import namespace="http://V300" />
+      <xsd:import namespace="http://request.base.V300" />
+      <xsd:import namespace="http://getProductDetail.product.V300" />
+      <xsd:import namespace="http://rpc.xml.coldfusion" />
+      <xsd:import namespace="http://addUpdateProductDetail.product.V300" />
+      <xsd:import namespace="http://response.base.V300" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="BundleItem">
+        <xsd:sequence>
+          <xsd:element name="Quantity" nillable="true" type="xsd:double" />
+          <xsd:element name="SKU" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Description">
+        <xsd:sequence>
+          <xsd:element name="Description" nillable="true" type="xsd:string" />
+          <xsd:element name="Teaser" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Media">
+        <xsd:sequence>
+          <xsd:element name="Caption" nillable="true" type="xsd:string" />
+          <xsd:element name="DisplayOrder" nillable="true" type="xsd:double" />
+          <xsd:element name="File" nillable="true" type="xsd:string" />
+          <xsd:element name="Thumbnail" nillable="true" type="xsd:string" />
+          <xsd:element name="Title" nillable="true" type="xsd:string" />
+          <xsd:element name="Type" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Photo">
+        <xsd:sequence>
+          <xsd:element name="Caption" nillable="true" type="xsd:string" />
+          <xsd:element name="DisplayOrder" nillable="true" type="xsd:double" />
+          <xsd:element name="Photo" nillable="true" type="xsd:string" />
+          <xsd:element name="Title" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Inventory">
+        <xsd:sequence>
+          <xsd:element name="CurrentInventory" nillable="true" type="xsd:double" />
+          <xsd:element name="InventoryPool" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Price">
+        <xsd:sequence>
+          <xsd:element name="Price" nillable="true" type="xsd:double" />
+          <xsd:element name="PriceLevel" nillable="true" type="xsd:string" />
+          <xsd:element name="PriceQuantity" nillable="true" type="xsd:double" />
+          <xsd:element name="SalePrice" nillable="true" type="xsd:double" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="SKU">
+        <xsd:sequence>
+          <xsd:element name="CostOfGood" nillable="true" type="xsd:double" />
+          <xsd:element name="DisplayOrder" nillable="true" type="xsd:double" />
+          <xsd:element name="Inventory" nillable="true" type="intf:ArrayOf_tns4_Inventory" />
+          <xsd:element name="IsInventoryOn" nillable="true" type="xsd:boolean" />
+          <xsd:element name="IsNoShippingCharge" nillable="true" type="xsd:boolean" />
+          <xsd:element name="IsNonTaxable" nillable="true" type="xsd:boolean" />
+          <xsd:element name="MaxOrderQty" nillable="true" type="xsd:double" />
+          <xsd:element name="MinOrderQty" nillable="true" type="xsd:double" />
+          <xsd:element name="OrderInMultiplesOf" nillable="true" type="xsd:double" />
+          <xsd:element name="Prices" nillable="true" type="intf:ArrayOf_tns4_Price" />
+          <xsd:element name="SKU" nillable="true" type="xsd:string" />
+          <xsd:element name="UPCCode" nillable="true" type="xsd:string" />
+          <xsd:element name="UnitDescription" nillable="true" type="xsd:string" />
+          <xsd:element name="Weight" nillable="true" type="xsd:double" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="SpiritProperties">
+        <xsd:sequence>
+          <xsd:element name="Country" nillable="true" type="xsd:string" />
+          <xsd:element name="Region" nillable="true" type="xsd:string" />
+          <xsd:element name="Type" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="VintageNote">
+        <xsd:sequence>
+          <xsd:element name="Note" nillable="true" type="xsd:string" />
+          <xsd:element name="Vintage" nillable="true" type="xsd:double" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="WineProperties">
+        <xsd:sequence>
+          <xsd:element name="Acid" nillable="true" type="xsd:string" />
+          <xsd:element name="Alcohol" nillable="true" type="xsd:string" />
+          <xsd:element name="Appellation" nillable="true" type="xsd:string" />
+          <xsd:element name="AvgRating" nillable="true" type="xsd:double" />
+          <xsd:element name="Awards" nillable="true" type="xsd:string" />
+          <xsd:element name="BottleSize" nillable="true" type="xsd:string" />
+          <xsd:element name="BottleSizeInML" nillable="true" type="xsd:double" />
+          <xsd:element name="BottlesInCase" nillable="true" type="xsd:double" />
+          <xsd:element name="BottlingDate" nillable="true" type="xsd:string" />
+          <xsd:element name="CGRating" nillable="true" type="xsd:double" />
+          <xsd:element name="Fermentation" nillable="true" type="xsd:string" />
+          <xsd:element name="FoodPairingNotes" nillable="true" type="xsd:string" />
+          <xsd:element name="HarvestDate" nillable="true" type="xsd:string" />
+          <xsd:element name="JHRating" nillable="true" type="xsd:double" />
+          <xsd:element name="OtherNotes" nillable="true" type="xsd:string" />
+          <xsd:element name="PH" nillable="true" type="xsd:string" />
+          <xsd:element name="Production" nillable="true" type="xsd:string" />
+          <xsd:element name="ProductionNotes" nillable="true" type="xsd:string" />
+          <xsd:element name="RPRating" nillable="true" type="xsd:double" />
+          <xsd:element name="Ratings" nillable="true" type="xsd:string" />
+          <xsd:element name="Region" nillable="true" type="xsd:string" />
+          <xsd:element name="ResidualSugar" nillable="true" type="xsd:string" />
+          <xsd:element name="STRating" nillable="true" type="xsd:double" />
+          <xsd:element name="Sugar" nillable="true" type="xsd:string" />
+          <xsd:element name="Tannin" nillable="true" type="xsd:string" />
+          <xsd:element name="TastingNotes" nillable="true" type="xsd:string" />
+          <xsd:element name="Type" nillable="true" type="xsd:string" />
+          <xsd:element name="Varietal" nillable="true" type="xsd:string" />
+          <xsd:element name="VineyardDesignation" nillable="true" type="xsd:string" />
+          <xsd:element name="VineyardNotes" nillable="true" type="xsd:string" />
+          <xsd:element name="Vintage" nillable="true" type="xsd:double" />
+          <xsd:element name="WARating" nillable="true" type="xsd:double" />
+          <xsd:element name="WAndSRating" nillable="true" type="xsd:double" />
+          <xsd:element name="WBRating" nillable="true" type="xsd:double" />
+          <xsd:element name="WERating" nillable="true" type="xsd:double" />
+          <xsd:element name="WNRating" nillable="true" type="xsd:double" />
+          <xsd:element name="WSRating" nillable="true" type="xsd:double" />
+          <xsd:element name="WineMakerNotes" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Product">
+        <xsd:sequence>
+          <xsd:element name="ActionMessage" nillable="true" type="xsd:string" />
+          <xsd:element name="Brand" nillable="true" type="xsd:string" />
+          <xsd:element name="BundleItems" nillable="true" type="intf:ArrayOf_tns4_BundleItem" />
+          <xsd:element name="DateAdded" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="DateModified" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="Description" nillable="true" type="tns4:Description" />
+          <xsd:element name="IsActive" nillable="true" type="xsd:boolean" />
+          <xsd:element name="IsDisplayOnWebsite" nillable="true" type="xsd:boolean" />
+          <xsd:element name="Media" nillable="true" type="intf:ArrayOf_tns4_Media" />
+          <xsd:element name="POSTitle" nillable="true" type="xsd:string" />
+          <xsd:element name="Photos" nillable="true" type="intf:ArrayOf_tns4_Photo" />
+          <xsd:element name="ProductID" nillable="true" type="xsd:string" />
+          <xsd:element name="SKUs" nillable="true" type="intf:ArrayOf_tns4_SKU" />
+          <xsd:element name="SpiritProperties" nillable="true" type="tns4:SpiritProperties" />
+          <xsd:element name="SubTitle" nillable="true" type="xsd:string" />
+          <xsd:element name="Title" nillable="true" type="xsd:string" />
+          <xsd:element name="Type" nillable="true" type="xsd:string" />
+          <xsd:element name="VintageNotes" nillable="true" type="intf:ArrayOf_tns4_VintageNote" />
+          <xsd:element name="WebsiteID" nillable="true" type="xsd:string" />
+          <xsd:element name="WineProperties" nillable="true" type="tns4:WineProperties" />
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://rpc.xml.coldfusion">
+      <xsd:import namespace="http://searchProducts.product.V300" />
+      <xsd:import namespace="http://V300" />
+      <xsd:import namespace="http://request.base.V300" />
+      <xsd:import namespace="http://getProductDetail.product.V300" />
+      <xsd:import namespace="http://_product.product.V300" />
+      <xsd:import namespace="http://addUpdateProductDetail.product.V300" />
+      <xsd:import namespace="http://response.base.V300" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="CFCInvocationException">
+        <xsd:sequence />
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://addUpdateProductDetail.product.V300">
+      <xsd:import namespace="http://searchProducts.product.V300" />
+      <xsd:import namespace="http://V300" />
+      <xsd:import namespace="http://request.base.V300" />
+      <xsd:import namespace="http://getProductDetail.product.V300" />
+      <xsd:import namespace="http://rpc.xml.coldfusion" />
+      <xsd:import namespace="http://_product.product.V300" />
+      <xsd:import namespace="http://response.base.V300" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="Request">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns2:Request">
+            <xsd:sequence>
+              <xsd:element name="Mode" nillable="true" type="xsd:string" />
+              <xsd:element name="Product" nillable="true" type="tns4:Product" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Response">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns3:Response">
+            <xsd:sequence>
+              <xsd:element name="ProductID" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://searchProducts.product.V300">
+      <xsd:import namespace="http://V300" />
+      <xsd:import namespace="http://request.base.V300" />
+      <xsd:import namespace="http://getProductDetail.product.V300" />
+      <xsd:import namespace="http://rpc.xml.coldfusion" />
+      <xsd:import namespace="http://_product.product.V300" />
+      <xsd:import namespace="http://addUpdateProductDetail.product.V300" />
+      <xsd:import namespace="http://response.base.V300" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="Request">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns2:Request">
+            <xsd:sequence>
+              <xsd:element name="DateModifiedFrom" nillable="true" type="xsd:dateTime" />
+              <xsd:element name="DateModifiedTo" nillable="true" type="xsd:dateTime" />
+              <xsd:element name="IsActive" nillable="true" type="xsd:boolean" />
+              <xsd:element name="MaxRows" nillable="true" type="xsd:double" />
+              <xsd:element name="Page" nillable="true" type="xsd:double" />
+              <xsd:element name="ProductID" nillable="true" type="xsd:string" />
+              <xsd:element name="SKU" nillable="true" type="xsd:string" />
+              <xsd:element name="SortBy" nillable="true" type="xsd:string" />
+              <xsd:element name="Title" nillable="true" type="xsd:string" />
+              <xsd:element name="Type" nillable="true" type="xsd:string" />
+              <xsd:element name="WebsiteIDs" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Product">
+        <xsd:sequence>
+          <xsd:element name="Brand" nillable="true" type="xsd:string" />
+          <xsd:element name="DateModified" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="Price" nillable="true" type="xsd:double" />
+          <xsd:element name="ProductID" nillable="true" type="xsd:string" />
+          <xsd:element name="SKU" nillable="true" type="xsd:string" />
+          <xsd:element name="SalePrice" nillable="true" type="xsd:double" />
+          <xsd:element name="Title" nillable="true" type="xsd:string" />
+          <xsd:element name="Type" nillable="true" type="xsd:string" />
+          <xsd:element name="Vintage" nillable="true" type="xsd:double" />
+          <xsd:element name="WebsiteID" nillable="true" type="xsd:string" />
+          <xsd:element name="isActive" nillable="true" type="xsd:boolean" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Response">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns3:Response">
+            <xsd:sequence>
+              <xsd:element name="Products" nillable="true" type="intf:ArrayOf_tns7_Product" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="SearchProductsRequest">
+    <wsdl:part name="Request" type="tns7:Request" />
+  </wsdl:message>
+  <wsdl:message name="SearchProductsResponse">
+    <wsdl:part name="SearchProductsReturn" type="tns7:Response" />
+  </wsdl:message>
+  <wsdl:message name="CFCInvocationException">
+    <wsdl:part name="fault" type="tns5:CFCInvocationException" />
+  </wsdl:message>
+  <wsdl:message name="AddUpdateProductDetailResponse">
+    <wsdl:part name="AddUpdateProductDetailReturn" type="tns6:Response" />
+  </wsdl:message>
+  <wsdl:message name="GetProductDetailRequest">
+    <wsdl:part name="Request" type="tns1:Request" />
+  </wsdl:message>
+  <wsdl:message name="GetProductDetailResponse">
+    <wsdl:part name="GetProductDetailReturn" type="tns1:Response" />
+  </wsdl:message>
+  <wsdl:message name="AddUpdateProductDetailRequest">
+    <wsdl:part name="Request" type="tns6:Request" />
+  </wsdl:message>
+  <wsdl:portType name="ProductService">
+    <wsdl:operation name="GetProductDetail" parameterOrder="Request">
+      <wsdl:input name="GetProductDetailRequest" message="intf:GetProductDetailRequest" />
+      <wsdl:output name="GetProductDetailResponse" message="intf:GetProductDetailResponse" />
+      <wsdl:fault name="CFCInvocationException" message="intf:CFCInvocationException" />
+    </wsdl:operation>
+    <wsdl:operation name="AddUpdateProductDetail" parameterOrder="Request">
+      <wsdl:input name="AddUpdateProductDetailRequest" message="intf:AddUpdateProductDetailRequest" />
+      <wsdl:output name="AddUpdateProductDetailResponse" message="intf:AddUpdateProductDetailResponse" />
+      <wsdl:fault name="CFCInvocationException" message="intf:CFCInvocationException" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchProducts" parameterOrder="Request">
+      <wsdl:input name="SearchProductsRequest" message="intf:SearchProductsRequest" />
+      <wsdl:output name="SearchProductsResponse" message="intf:SearchProductsResponse" />
+      <wsdl:fault name="CFCInvocationException" message="intf:CFCInvocationException" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ProductService.cfcSoapBinding" type="intf:ProductService">
+    <wsdlsoap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="GetProductDetail">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="GetProductDetailRequest">
+        <wsdlsoap:body use="encoded" namespace="http://V300" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="GetProductDetailResponse">
+        <wsdlsoap:body use="encoded" namespace="http://V300" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="CFCInvocationException">
+        <wsdlsoap:fault use="encoded" name="CFCInvocationException" namespace="http://V300" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AddUpdateProductDetail">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="AddUpdateProductDetailRequest">
+        <wsdlsoap:body use="encoded" namespace="http://V300" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="AddUpdateProductDetailResponse">
+        <wsdlsoap:body use="encoded" namespace="http://V300" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="CFCInvocationException">
+        <wsdlsoap:fault use="encoded" name="CFCInvocationException" namespace="http://V300" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="SearchProducts">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="SearchProductsRequest">
+        <wsdlsoap:body use="encoded" namespace="http://V300" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="SearchProductsResponse">
+        <wsdlsoap:body use="encoded" namespace="http://V300" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="CFCInvocationException">
+        <wsdlsoap:fault use="encoded" name="CFCInvocationException" namespace="http://V300" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ProductServiceService">
+    <wsdl:port name="ProductService.cfc" binding="intf:ProductService.cfcSoapBinding">
+      <wsdlsoap:address location="http://webservices.vin65.com/V300/ProductService.cfc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

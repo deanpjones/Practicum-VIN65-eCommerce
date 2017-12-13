@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:impl="http://V301" xmlns:tns2="http://request.base.V301" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns4="http://_orderDetail.order.V301" xmlns:tns7="http://postOrderTracking.order.V301" xmlns:tns8="http://searchOrders.order.V301" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:tns1="http://getOrderDetail.order.V301" xmlns:tns3="http://response.base.V301" xmlns:tns6="http://rpc.xml.coldfusion" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns5="http://_contact.contact.V301" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:intf="http://V301" targetNamespace="http://V301" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://request.base.V301">
+      <xsd:import namespace="http://getOrderDetail.order.V301" />
+      <xsd:import namespace="http://_orderDetail.order.V301" />
+      <xsd:import namespace="http://postOrderTracking.order.V301" />
+      <xsd:import namespace="http://searchOrders.order.V301" />
+      <xsd:import namespace="http://_contact.contact.V301" />
+      <xsd:import namespace="http://rpc.xml.coldfusion" />
+      <xsd:import namespace="http://V301" />
+      <xsd:import namespace="http://response.base.V301" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="Security">
+        <xsd:sequence>
+          <xsd:element name="Password" nillable="true" type="xsd:string" />
+          <xsd:element name="Username" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Request">
+        <xsd:sequence>
+          <xsd:element name="Security" nillable="true" type="tns2:Security" />
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://getOrderDetail.order.V301">
+      <xsd:import namespace="http://_orderDetail.order.V301" />
+      <xsd:import namespace="http://postOrderTracking.order.V301" />
+      <xsd:import namespace="http://request.base.V301" />
+      <xsd:import namespace="http://searchOrders.order.V301" />
+      <xsd:import namespace="http://_contact.contact.V301" />
+      <xsd:import namespace="http://rpc.xml.coldfusion" />
+      <xsd:import namespace="http://V301" />
+      <xsd:import namespace="http://response.base.V301" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="Request">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns2:Request">
+            <xsd:sequence>
+              <xsd:element name="OrderID" nillable="true" type="xsd:string" />
+              <xsd:element name="OrderNumber" nillable="true" type="xsd:double" />
+              <xsd:element name="ShowKitAsIndividualSKUs" nillable="true" type="xsd:boolean" />
+              <xsd:element name="WebsiteID" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Response">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns3:Response">
+            <xsd:sequence>
+              <xsd:element name="Order" nillable="true" type="tns4:Order" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://response.base.V301">
+      <xsd:import namespace="http://getOrderDetail.order.V301" />
+      <xsd:import namespace="http://_orderDetail.order.V301" />
+      <xsd:import namespace="http://postOrderTracking.order.V301" />
+      <xsd:import namespace="http://request.base.V301" />
+      <xsd:import namespace="http://searchOrders.order.V301" />
+      <xsd:import namespace="http://_contact.contact.V301" />
+      <xsd:import namespace="http://rpc.xml.coldfusion" />
+      <xsd:import namespace="http://V301" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="Error">
+        <xsd:sequence>
+          <xsd:element name="ErrorCode" nillable="true" type="xsd:string" />
+          <xsd:element name="ErrorMessage" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Response">
+        <xsd:sequence>
+          <xsd:element name="Errors" nillable="true" type="intf:ArrayOf_tns3_Error" />
+          <xsd:element name="IsSuccessful" nillable="true" type="xsd:boolean" />
+          <xsd:element name="RecordCount" nillable="true" type="xsd:double" />
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://V301">
+      <xsd:import namespace="http://getOrderDetail.order.V301" />
+      <xsd:import namespace="http://_orderDetail.order.V301" />
+      <xsd:import namespace="http://postOrderTracking.order.V301" />
+      <xsd:import namespace="http://request.base.V301" />
+      <xsd:import namespace="http://searchOrders.order.V301" />
+      <xsd:import namespace="http://_contact.contact.V301" />
+      <xsd:import namespace="http://rpc.xml.coldfusion" />
+      <xsd:import namespace="http://response.base.V301" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="ArrayOf_tns3_Error">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns3:Error[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns4_OrderCoupon">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns4:OrderCoupon[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns4_OrderItem">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns4:OrderItem[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns4_Tender">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns4:Tender[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns7_Package">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns7:Package[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns8_Order">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns8:Order[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://_contact.contact.V301">
+      <xsd:import namespace="http://getOrderDetail.order.V301" />
+      <xsd:import namespace="http://_orderDetail.order.V301" />
+      <xsd:import namespace="http://postOrderTracking.order.V301" />
+      <xsd:import namespace="http://request.base.V301" />
+      <xsd:import namespace="http://searchOrders.order.V301" />
+      <xsd:import namespace="http://rpc.xml.coldfusion" />
+      <xsd:import namespace="http://V301" />
+      <xsd:import namespace="http://response.base.V301" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="Contact">
+        <xsd:sequence>
+          <xsd:element name="Address" nillable="true" type="xsd:string" />
+          <xsd:element name="Address2" nillable="true" type="xsd:string" />
+          <xsd:element name="BirthDate" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="CashierID" nillable="true" type="xsd:string" />
+          <xsd:element name="City" nillable="true" type="xsd:string" />
+          <xsd:element name="Company" nillable="true" type="xsd:string" />
+          <xsd:element name="ContactID" nillable="true" type="xsd:string" />
+          <xsd:element name="CountryCode" nillable="true" type="xsd:string" />
+          <xsd:element name="CustomerNumber" nillable="true" type="xsd:double" />
+          <xsd:element name="DateAdded" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="DateModified" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="Email" nillable="true" type="xsd:string" />
+          <xsd:element name="FirstName" nillable="true" type="xsd:string" />
+          <xsd:element name="IsNonTaxable" nillable="true" type="xsd:boolean" />
+          <xsd:element name="LastLoginDate" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="LastName" nillable="true" type="xsd:string" />
+          <xsd:element name="LastOrderDate" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="LifetimeValue" nillable="true" type="xsd:double" />
+          <xsd:element name="MasterContactID" nillable="true" type="xsd:string" />
+          <xsd:element name="OrderCount" nillable="true" type="xsd:double" />
+          <xsd:element name="Phone" nillable="true" type="xsd:string" />
+          <xsd:element name="SourceCode" nillable="true" type="xsd:string" />
+          <xsd:element name="StateCode" nillable="true" type="xsd:string" />
+          <xsd:element name="Title" nillable="true" type="xsd:string" />
+          <xsd:element name="Username" nillable="true" type="xsd:string" />
+          <xsd:element name="WebsiteID" nillable="true" type="xsd:string" />
+          <xsd:element name="WholesaleNumber" nillable="true" type="xsd:string" />
+          <xsd:element name="ZipCode" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://_orderDetail.order.V301">
+      <xsd:import namespace="http://getOrderDetail.order.V301" />
+      <xsd:import namespace="http://postOrderTracking.order.V301" />
+      <xsd:import namespace="http://request.base.V301" />
+      <xsd:import namespace="http://searchOrders.order.V301" />
+      <xsd:import namespace="http://_contact.contact.V301" />
+      <xsd:import namespace="http://rpc.xml.coldfusion" />
+      <xsd:import namespace="http://V301" />
+      <xsd:import namespace="http://response.base.V301" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="OrderCoupon">
+        <xsd:sequence>
+          <xsd:element name="Code" nillable="true" type="xsd:string" />
+          <xsd:element name="CouponName" nillable="true" type="xsd:string" />
+          <xsd:element name="ProductValue" nillable="true" type="xsd:double" />
+          <xsd:element name="ShippingValue" nillable="true" type="xsd:double" />
+          <xsd:element name="TotalValue" nillable="true" type="xsd:double" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="OrderItem">
+        <xsd:sequence>
+          <xsd:element name="CostOfGood" nillable="true" type="xsd:double" />
+          <xsd:element name="Department" nillable="true" type="xsd:string" />
+          <xsd:element name="DepartmentCode" nillable="true" type="xsd:string" />
+          <xsd:element name="InventoryPool" nillable="true" type="xsd:string" />
+          <xsd:element name="IsNonTaxable" nillable="true" type="xsd:boolean" />
+          <xsd:element name="IsSubSKU" nillable="true" type="xsd:boolean" />
+          <xsd:element name="OriginalPrice" nillable="true" type="xsd:double" />
+          <xsd:element name="ParentSKU" nillable="true" type="xsd:string" />
+          <xsd:element name="ParentSKUID" nillable="true" type="xsd:string" />
+          <xsd:element name="Price" nillable="true" type="xsd:double" />
+          <xsd:element name="ProductID" nillable="true" type="xsd:string" />
+          <xsd:element name="ProductSKUID" nillable="true" type="xsd:string" />
+          <xsd:element name="Quantity" nillable="true" type="xsd:double" />
+          <xsd:element name="SKU" nillable="true" type="xsd:string" />
+          <xsd:element name="SalesTax" nillable="true" type="xsd:double" />
+          <xsd:element name="ShippedDate" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="ShippingSKU" nillable="true" type="xsd:string" />
+          <xsd:element name="ShippingService" nillable="true" type="xsd:string" />
+          <xsd:element name="SubDepartment" nillable="true" type="xsd:string" />
+          <xsd:element name="SubDepartmentCode" nillable="true" type="xsd:string" />
+          <xsd:element name="SubTitle" nillable="true" type="xsd:string" />
+          <xsd:element name="Title" nillable="true" type="xsd:string" />
+          <xsd:element name="TrackingNumber" nillable="true" type="xsd:string" />
+          <xsd:element name="Type" nillable="true" type="xsd:string" />
+          <xsd:element name="UnitDescription" nillable="true" type="xsd:string" />
+          <xsd:element name="Weight" nillable="true" type="xsd:double" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="RMS">
+        <xsd:sequence>
+          <xsd:element name="BatchID" nillable="true" type="xsd:string" />
+          <xsd:element name="CashierID" nillable="true" type="xsd:string" />
+          <xsd:element name="RegisterNumber" nillable="true" type="xsd:string" />
+          <xsd:element name="StoreID" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ShipToAddress">
+        <xsd:sequence>
+          <xsd:element name="Address" nillable="true" type="xsd:string" />
+          <xsd:element name="Address2" nillable="true" type="xsd:string" />
+          <xsd:element name="BirthDate" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="City" nillable="true" type="xsd:string" />
+          <xsd:element name="Company" nillable="true" type="xsd:string" />
+          <xsd:element name="CountryCode" nillable="true" type="xsd:string" />
+          <xsd:element name="Email" nillable="true" type="xsd:string" />
+          <xsd:element name="FirstName" nillable="true" type="xsd:string" />
+          <xsd:element name="LastName" nillable="true" type="xsd:string" />
+          <xsd:element name="Phone" nillable="true" type="xsd:string" />
+          <xsd:element name="StateCode" nillable="true" type="xsd:string" />
+          <xsd:element name="Title" nillable="true" type="xsd:string" />
+          <xsd:element name="ZipCode" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Tender">
+        <xsd:sequence>
+          <xsd:element name="AmountTendered" nillable="true" type="xsd:double" />
+          <xsd:element name="CardExpiryMo" nillable="true" type="xsd:double" />
+          <xsd:element name="CardExpiryYr" nillable="true" type="xsd:double" />
+          <xsd:element name="CardNumber" nillable="true" type="xsd:string" />
+          <xsd:element name="CardType" nillable="true" type="xsd:string" />
+          <xsd:element name="GiftCardCode" nillable="true" type="xsd:string" />
+          <xsd:element name="GiftCardID" nillable="true" type="xsd:string" />
+          <xsd:element name="GiftCardNumber" nillable="true" type="xsd:string" />
+          <xsd:element name="GiftCardVendor" nillable="true" type="xsd:string" />
+          <xsd:element name="IsActive" nillable="true" type="xsd:boolean" />
+          <xsd:element name="NameOnCard" nillable="true" type="xsd:string" />
+          <xsd:element name="PaymentDate" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="PaymentStatus" nillable="true" type="xsd:string" />
+          <xsd:element name="PaymentTerms" nillable="true" type="xsd:string" />
+          <xsd:element name="PaymentType" nillable="true" type="xsd:string" />
+          <xsd:element name="PointsID" nillable="true" type="xsd:string" />
+          <xsd:element name="PointsRedeemed" nillable="true" type="xsd:double" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Order">
+        <xsd:sequence>
+          <xsd:element name="AltOrderNumber" nillable="true" type="xsd:string" />
+          <xsd:element name="BillContact" nillable="true" type="tns5:Contact" />
+          <xsd:element name="ClubName" nillable="true" type="xsd:string" />
+          <xsd:element name="ClubShipmentName" nillable="true" type="xsd:string" />
+          <xsd:element name="CompletedDate" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="CorporateOrderBatchID" nillable="true" type="xsd:string" />
+          <xsd:element name="CorporateOrderNumber" nillable="true" type="xsd:double" />
+          <xsd:element name="Deposit" nillable="true" type="xsd:double" />
+          <xsd:element name="FFSN" nillable="true" type="xsd:string" />
+          <xsd:element name="FulfillmentHouse" nillable="true" type="xsd:string" />
+          <xsd:element name="FutureShipDate" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="GiftMessage" nillable="true" type="xsd:string" />
+          <xsd:element name="Handling" nillable="true" type="xsd:double" />
+          <xsd:element name="IsAPickupOrder" nillable="true" type="xsd:boolean" />
+          <xsd:element name="IsExternalOrder" nillable="true" type="xsd:boolean" />
+          <xsd:element name="Marketplace" nillable="true" type="xsd:string" />
+          <xsd:element name="OrderCoupons" nillable="true" type="intf:ArrayOf_tns4_OrderCoupon" />
+          <xsd:element name="OrderID" nillable="true" type="xsd:string" />
+          <xsd:element name="OrderItems" nillable="true" type="intf:ArrayOf_tns4_OrderItem" />
+          <xsd:element name="OrderNotes" nillable="true" type="xsd:string" />
+          <xsd:element name="OrderNumber" nillable="true" type="xsd:double" />
+          <xsd:element name="OrderStatus" nillable="true" type="xsd:string" />
+          <xsd:element name="PaymentStatus" nillable="true" type="xsd:string" />
+          <xsd:element name="PaymentTerms" nillable="true" type="xsd:string" />
+          <xsd:element name="PickupDate" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="PickupLocationCode" nillable="true" type="xsd:string" />
+          <xsd:element name="PreviousOrderNumber" nillable="true" type="xsd:double" />
+          <xsd:element name="PriceLevel" nillable="true" type="xsd:string" />
+          <xsd:element name="RMS" nillable="true" type="tns4:RMS" />
+          <xsd:element name="RequestedDeliveryDate" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="RequestedShipDate" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="SalesAssociate" nillable="true" type="xsd:string" />
+          <xsd:element name="SalesAttribute" nillable="true" type="xsd:string" />
+          <xsd:element name="ShipToAddress" nillable="true" type="tns4:ShipToAddress" />
+          <xsd:element name="ShippedDate" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="Shipping" nillable="true" type="xsd:double" />
+          <xsd:element name="ShippingService" nillable="true" type="xsd:string" />
+          <xsd:element name="ShippingStatus" nillable="true" type="xsd:string" />
+          <xsd:element name="ShippingType" nillable="true" type="xsd:string" />
+          <xsd:element name="SourceCode" nillable="true" type="xsd:string" />
+          <xsd:element name="SubTotal" nillable="true" type="xsd:double" />
+          <xsd:element name="SubmittedDate" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="Tax" nillable="true" type="xsd:double" />
+          <xsd:element name="Tender" nillable="true" type="intf:ArrayOf_tns4_Tender" />
+          <xsd:element name="Tip" nillable="true" type="xsd:double" />
+          <xsd:element name="Total" nillable="true" type="xsd:double" />
+          <xsd:element name="TotalAfterTip" nillable="true" type="xsd:double" />
+          <xsd:element name="TrackingNumber" nillable="true" type="xsd:string" />
+          <xsd:element name="TransactionType" nillable="true" type="xsd:string" />
+          <xsd:element name="Type" nillable="true" type="xsd:string" />
+          <xsd:element name="WebsiteID" nillable="true" type="xsd:string" />
+          <xsd:element name="WholesaleNumber" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://rpc.xml.coldfusion">
+      <xsd:import namespace="http://getOrderDetail.order.V301" />
+      <xsd:import namespace="http://_orderDetail.order.V301" />
+      <xsd:import namespace="http://postOrderTracking.order.V301" />
+      <xsd:import namespace="http://request.base.V301" />
+      <xsd:import namespace="http://searchOrders.order.V301" />
+      <xsd:import namespace="http://_contact.contact.V301" />
+      <xsd:import namespace="http://V301" />
+      <xsd:import namespace="http://response.base.V301" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="CFCInvocationException">
+        <xsd:sequence />
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://postOrderTracking.order.V301">
+      <xsd:import namespace="http://getOrderDetail.order.V301" />
+      <xsd:import namespace="http://_orderDetail.order.V301" />
+      <xsd:import namespace="http://request.base.V301" />
+      <xsd:import namespace="http://searchOrders.order.V301" />
+      <xsd:import namespace="http://_contact.contact.V301" />
+      <xsd:import namespace="http://rpc.xml.coldfusion" />
+      <xsd:import namespace="http://V301" />
+      <xsd:import namespace="http://response.base.V301" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="Package">
+        <xsd:sequence>
+          <xsd:element name="Carrier" nillable="true" type="xsd:string" />
+          <xsd:element name="ShipDate" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="TrackingNumber" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Request">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns2:Request">
+            <xsd:sequence>
+              <xsd:element name="OrderNumber" nillable="true" type="xsd:double" />
+              <xsd:element name="Packages" nillable="true" type="intf:ArrayOf_tns7_Package" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Response">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns3:Response">
+            <xsd:sequence />
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://searchOrders.order.V301">
+      <xsd:import namespace="http://getOrderDetail.order.V301" />
+      <xsd:import namespace="http://_orderDetail.order.V301" />
+      <xsd:import namespace="http://postOrderTracking.order.V301" />
+      <xsd:import namespace="http://request.base.V301" />
+      <xsd:import namespace="http://_contact.contact.V301" />
+      <xsd:import namespace="http://rpc.xml.coldfusion" />
+      <xsd:import namespace="http://V301" />
+      <xsd:import namespace="http://response.base.V301" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="Request">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns2:Request">
+            <xsd:sequence>
+              <xsd:element name="BillFirstName" nillable="true" type="xsd:string" />
+              <xsd:element name="BillLastName" nillable="true" type="xsd:string" />
+              <xsd:element name="ContactID" nillable="true" type="xsd:string" />
+              <xsd:element name="DateCompletedFrom" nillable="true" type="xsd:dateTime" />
+              <xsd:element name="DateCompletedTo" nillable="true" type="xsd:dateTime" />
+              <xsd:element name="DateModifiedFrom" nillable="true" type="xsd:dateTime" />
+              <xsd:element name="DateModifiedTo" nillable="true" type="xsd:dateTime" />
+              <xsd:element name="DateShippedFrom" nillable="true" type="xsd:dateTime" />
+              <xsd:element name="DateShippedTo" nillable="true" type="xsd:dateTime" />
+              <xsd:element name="DateSubmittedFrom" nillable="true" type="xsd:dateTime" />
+              <xsd:element name="DateSubmittedTo" nillable="true" type="xsd:dateTime" />
+              <xsd:element name="IncludeExternalOrders" nillable="true" type="xsd:boolean" />
+              <xsd:element name="IsAPickupOrder" nillable="true" type="xsd:boolean" />
+              <xsd:element name="IsARMSOrder" nillable="true" type="xsd:boolean" />
+              <xsd:element name="IsPendingPickup" nillable="true" type="xsd:boolean" />
+              <xsd:element name="MaxRows" nillable="true" type="xsd:double" />
+              <xsd:element name="OrderID" nillable="true" type="xsd:string" />
+              <xsd:element name="OrderNumber" nillable="true" type="xsd:double" />
+              <xsd:element name="OrderStatus" nillable="true" type="xsd:string" />
+              <xsd:element name="Page" nillable="true" type="xsd:double" />
+              <xsd:element name="PaymentStatus" nillable="true" type="xsd:string" />
+              <xsd:element name="PickupLocationCode" nillable="true" type="xsd:string" />
+              <xsd:element name="ShipFirstName" nillable="true" type="xsd:string" />
+              <xsd:element name="ShipLastName" nillable="true" type="xsd:string" />
+              <xsd:element name="ShipStateCode" nillable="true" type="xsd:string" />
+              <xsd:element name="ShippingStatus" nillable="true" type="xsd:string" />
+              <xsd:element name="Type" nillable="true" type="xsd:string" />
+              <xsd:element name="WebsiteIDs" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Order">
+        <xsd:sequence>
+          <xsd:element name="BillFirstName" nillable="true" type="xsd:string" />
+          <xsd:element name="BillLastName" nillable="true" type="xsd:string" />
+          <xsd:element name="CompletedDate" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="ContactID" nillable="true" type="xsd:string" />
+          <xsd:element name="DateModified" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="GiftMessage" nillable="true" type="xsd:string" />
+          <xsd:element name="IsAPickupOrder" nillable="true" type="xsd:boolean" />
+          <xsd:element name="IsARMSOrder" nillable="true" type="xsd:boolean" />
+          <xsd:element name="IsExternalOrder" nillable="true" type="xsd:boolean" />
+          <xsd:element name="IsPendingPickup" nillable="true" type="xsd:boolean" />
+          <xsd:element name="OrderID" nillable="true" type="xsd:string" />
+          <xsd:element name="OrderNotes" nillable="true" type="xsd:string" />
+          <xsd:element name="OrderNumber" nillable="true" type="xsd:double" />
+          <xsd:element name="OrderStatus" nillable="true" type="xsd:string" />
+          <xsd:element name="OrderTotal" nillable="true" type="xsd:double" />
+          <xsd:element name="PaymentStatus" nillable="true" type="xsd:string" />
+          <xsd:element name="ShipFirstName" nillable="true" type="xsd:string" />
+          <xsd:element name="ShipLastName" nillable="true" type="xsd:string" />
+          <xsd:element name="ShipStateCode" nillable="true" type="xsd:string" />
+          <xsd:element name="ShippedDate" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="ShippingStatus" nillable="true" type="xsd:string" />
+          <xsd:element name="ShippingType" nillable="true" type="xsd:string" />
+          <xsd:element name="SubmittedDate" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="TrackingNumber" nillable="true" type="xsd:string" />
+          <xsd:element name="Type" nillable="true" type="xsd:string" />
+          <xsd:element name="WebsiteID" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Response">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns3:Response">
+            <xsd:sequence>
+              <xsd:element name="Orders" nillable="true" type="intf:ArrayOf_tns8_Order" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="SearchOrdersResponse">
+    <wsdl:part name="SearchOrdersReturn" type="tns8:Response" />
+  </wsdl:message>
+  <wsdl:message name="SearchOrdersRequest">
+    <wsdl:part name="Request" type="tns8:Request" />
+  </wsdl:message>
+  <wsdl:message name="PostOrderTrackingResponse">
+    <wsdl:part name="PostOrderTrackingReturn" type="tns7:Response" />
+  </wsdl:message>
+  <wsdl:message name="PostOrderTrackingRequest">
+    <wsdl:part name="Request" type="tns7:Request" />
+  </wsdl:message>
+  <wsdl:message name="CFCInvocationException">
+    <wsdl:part name="fault" type="tns6:CFCInvocationException" />
+  </wsdl:message>
+  <wsdl:message name="GetOrderDetailResponse">
+    <wsdl:part name="GetOrderDetailReturn" type="tns1:Response" />
+  </wsdl:message>
+  <wsdl:message name="GetOrderDetailRequest">
+    <wsdl:part name="Request" type="tns1:Request" />
+  </wsdl:message>
+  <wsdl:portType name="OrderService">
+    <wsdl:operation name="GetOrderDetail" parameterOrder="Request">
+      <wsdl:input name="GetOrderDetailRequest" message="intf:GetOrderDetailRequest" />
+      <wsdl:output name="GetOrderDetailResponse" message="intf:GetOrderDetailResponse" />
+      <wsdl:fault name="CFCInvocationException" message="intf:CFCInvocationException" />
+    </wsdl:operation>
+    <wsdl:operation name="PostOrderTracking" parameterOrder="Request">
+      <wsdl:input name="PostOrderTrackingRequest" message="intf:PostOrderTrackingRequest" />
+      <wsdl:output name="PostOrderTrackingResponse" message="intf:PostOrderTrackingResponse" />
+      <wsdl:fault name="CFCInvocationException" message="intf:CFCInvocationException" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchOrders" parameterOrder="Request">
+      <wsdl:input name="SearchOrdersRequest" message="intf:SearchOrdersRequest" />
+      <wsdl:output name="SearchOrdersResponse" message="intf:SearchOrdersResponse" />
+      <wsdl:fault name="CFCInvocationException" message="intf:CFCInvocationException" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="OrderService.cfcSoapBinding" type="intf:OrderService">
+    <wsdlsoap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="GetOrderDetail">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="GetOrderDetailRequest">
+        <wsdlsoap:body use="encoded" namespace="http://V301" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="GetOrderDetailResponse">
+        <wsdlsoap:body use="encoded" namespace="http://V301" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="CFCInvocationException">
+        <wsdlsoap:fault use="encoded" name="CFCInvocationException" namespace="http://V301" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="PostOrderTracking">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="PostOrderTrackingRequest">
+        <wsdlsoap:body use="encoded" namespace="http://V301" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="PostOrderTrackingResponse">
+        <wsdlsoap:body use="encoded" namespace="http://V301" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="CFCInvocationException">
+        <wsdlsoap:fault use="encoded" name="CFCInvocationException" namespace="http://V301" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="SearchOrders">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="SearchOrdersRequest">
+        <wsdlsoap:body use="encoded" namespace="http://V301" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="SearchOrdersResponse">
+        <wsdlsoap:body use="encoded" namespace="http://V301" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="CFCInvocationException">
+        <wsdlsoap:fault use="encoded" name="CFCInvocationException" namespace="http://V301" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="OrderServiceService">
+    <wsdl:port name="OrderService.cfc" binding="intf:OrderService.cfcSoapBinding">
+      <wsdlsoap:address location="http://webservices.vin65.com/V301/OrderService.cfc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

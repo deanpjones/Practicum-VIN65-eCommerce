@@ -1,0 +1,367 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
+using vin65WS.Controller;
+using VinProduct = vin65WS2.com.vin65.webservicesProduct;
+
+namespace vin65WS2
+{
+    //DEAN JONES
+    //MAY 30, 2017
+    //ProductController.cs
+    //handles all the METHODS for making calls related to PRODUCTS
+
+    //SUPPORTING FILES 
+    //  Proxy/ProductServiceService.cs (proxy class)(generated from wsdl.exe)
+
+    //TODO
+    //BACKUP ALL (EACH PRODUCT, all details)(in case need to restore...)
+    //FIX, GetProductDetailsBySKU, GetProductDetailsBySKU2 (NOT WORKING, may be a bug)(Erin moving me on to inventory, don't have time...)
+    //finish, PS_AddUpdateProductBySKU2...
+
+
+    public class ProductController
+    {
+        //OBJECTS
+        MyConnection conn;                  //to connect with username and password
+        PS_ProductServiceService ps;        //connect to (Product Service)
+        //------
+        //SEARCH PRODUCTS
+        PS_Request1 ps_request1;
+        private PS_Response1 ps_response1;
+        //PS_Security ps_security;
+        //------
+        //GET PRODUCT DETAILS
+        PS_Request3 ps_request3;
+        private PS_Response3 ps_response3;
+        //------
+        //ADD or UPDATE PRODUCT DETAILS
+        PS_Request2 ps_request2;
+        private PS_Response2 ps_response2;
+
+
+        //CONSTRUCTOR
+        public ProductController(string username, string password)
+        {
+            //INSTANTIATE OBJECTS
+            conn = new MyConnection(username, password);    //Establish a connection when an object is created
+            ps = new PS_ProductServiceService();            //create PRODUCT SERVICES object
+
+            //--------------
+            //SEARCH PRODUCT
+            ps_request1 = new PS_Request1();                 //create REQUEST object
+            ps_request1.Security = new PS_Security();        //Security settings for connection (to VIN65 web service)
+            ps_response1 = new PS_Response1();               //create RESPONSE object (array of Products[...])
+
+            //SET USERNAME and PASSWORD
+            ps_request1.Security.Username = conn.Ws_Username;        //set global username
+            //ps_request.Security.Username = "DeanJonesSANDBOX";
+            ps_request1.Security.Password = conn.Ws_Password;        //set global password
+            //ps_request.Security.Password = "willowpark";
+            //--------------
+
+            //-------------------
+            //GET PRODUCT DETAILS
+            ps_request3 = new PS_Request3();                 //create REQUEST object
+            ps_request3.Security = new PS_Security();        //Security settings for connection (to VIN65 web service)
+            ps_response3 = new PS_Response3();               //create RESPONSE object (array of Products[...])
+
+            //SET USERNAME and PASSWORD
+            ps_request3.Security.Username = conn.Ws_Username;        //set global username
+            ps_request3.Security.Password = conn.Ws_Password;        //set global password
+            //-------------------
+
+            //-----------------------------
+            //ADD OR UPDATE PRODUCT DETAILS
+            ps_request2 = new PS_Request2();                 //create REQUEST object
+            ps_request2.Security = new PS_Security();        //Security settings for connection (to VIN65 web service)
+            ps_response2 = new PS_Response2();               //create RESPONSE object (array of Products[...])
+            
+            //SET USERNAME and PASSWORD
+            ps_request2.Security.Username = conn.Ws_Username;        //set global username
+            ps_request2.Security.Password = conn.Ws_Password;        //set global password
+            //-----------------------------
+        }
+
+        //GETTERS AND SETTERS
+        public PS_Response1 Ps_response1 { get => ps_response1; }
+        public PS_Response3 Ps_response3 { get => ps_response3; }
+        public PS_Response2 Ps_response2 { get => ps_response2; }
+
+        //public PS_Response1 PS_Response
+        //{
+        //    get { return ps_response1; }
+        //}
+
+        //*****************************************************************************************************************
+        //*****************************************************************************************************************
+
+        //?????????????????????????????????????????????????????????
+        //METHOD (ADD/UPDATE (ONE) PRODUCT)
+        //(same as GetProductDetailsBySKU, but RETURN OBJECT is ONE LEVEL HIGHER)(gives IsSuccessful, Errors, RecordCount properties)
+        //*** warning, may need to run GetProductDetails first, to (fill in the blank fields) of existing product, so we don't overwrite ***
+        public PS_Response2 PS_AddUpdateProductBySKU2(Product myproduct)
+        {
+            //*** see constructor for instantiated objects... ***
+
+            //MODE (ps_request2.Mode)
+            //'CreateAttributes' (some properties) will be created on the fly. 
+            //'Strict' (some properties) must exist or add/update will error.
+            //< ErrorCode xsi: type = "xsd:string" > InvalidMode </ ErrorCode >
+            //< ErrorMessage xsi: type = "xsd:string" > Mode must be one of Strict,CreateAttributes </ ErrorMessage >
+            //
+            //WebsiteID, ProductID, Region (in Strict Mode...)(if these are removed it will create object...)
+
+            //check if PRODUCT already exists...(ProductID...)
+            //add new product OR update existing...?
+            //
+
+            try
+            {
+                //set mode
+                ps_request2.Mode = "Strict";                //'Strict' (some properties) must exist or add/update will error.
+                //******************************
+                ps_request2.Product = myproduct;            //need to provide a (Product object)(use GetMethod...)
+                //*******************************
+                //ps_request2.Security                      //already set in constructor
+
+                //********************************************
+                ps_response2 = ps.AddUpdateProductDetail(ps_request2);
+                //********************************************
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return ps_response2;
+        }
+
+
+        //*****************************************************************************************************************
+        //*****************************************************************************************************************
+
+        //?????????????????????????
+        //METHOD (GET PRODUCT DETAILS)(ALL)
+        public Product PS_GetProductDetailsBySKU(string sku)
+        {
+            //*** see constructor for instantiated objects... ***
+
+            //Create a PRODUCT 
+            Product product = new Product();
+
+            try
+            {
+                //request.SKU = "739242";                     //set the SKU to search for...
+                ps_request3.SKU = sku;
+                //********************************************
+                //"There is an error in XML document (99, 15)."
+                ps_response3 = ps.GetProductDetail(ps_request3);
+                //********************************************
+
+                //TEST IF THE QUERY WAS SUCCESSFUL
+                if ((bool)ps_response3.IsSuccessful)
+                {
+                    product = ps_response3.Product;
+                    //product = ps_response3.Products[0];
+                }
+            }
+            catch (Exception ex)
+            {
+               throw ex;
+            }
+
+            return product;
+        }
+        //?????????????????????????
+
+        //?????????????????????????
+        //METHOD (search for a Product)(VIN65 web service)
+        //(same as GetProductDetailsBySKU, but RETURN OBJECT is ONE LEVEL HIGHER)(gives IsSuccessful, Errors, RecordCount properties)
+        public PS_Response3 PS_GetProductDetailsBySKU2(string sku)
+        {
+            //*** see constructor for instantiated objects... ***
+
+            try
+            {
+                //request.SKU = "739242";                     //set the SKU to search for...
+                ps_request3.SKU = sku;
+                //ps_request3.WebsiteID = "8d4e8ba9-c5fe-77f4-9d7f-127f3ae38b53";
+                //********************************************
+                //????????????
+                //{"Cannot assign object of type System.Xml.XmlNode[] to an object of type PS_Product."}
+                //may have hit a KNOWN BUG 
+                //  https://social.msdn.microsoft.com/Forums/en-US/f550e2b2-af9e-4653-a618-cffffdc70fdf/cannot-assign-object-of-type-systemxmlxmlnode-to-an-object-of-type-systemstring-calling-a?forum=asmxandxml
+
+                ps_response3 = ps.GetProductDetail(ps_request3);
+                //********************************************
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return ps_response3;
+        }
+        //?????????????????????????
+
+        //*****************************************************************************************************************
+        //*****************************************************************************************************************      
+
+        //METHOD (search for a Product)(VIN65 web service)
+        public PS_Product1 PS_SearchProductBySKU(string sku)
+        {
+            //*** see constructor for instantiated objects... ***
+
+            //Create a PRODUCT 
+            PS_Product1 product1 = new PS_Product1();
+
+            try
+            {
+                //request.SKU = "739242";                     //set the SKU to search for...
+                ps_request1.SKU = sku;
+                //********************************************
+                ps_response1 = ps.SearchProducts(ps_request1);
+                //********************************************
+
+                //TEST IF THE QUERY WAS SUCCESSFUL
+                if ((bool)ps_response1.IsSuccessful)
+                {                   
+                    product1 = ps_response1.Products[0];
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return product1;
+        }
+
+        //METHOD (search for a Product)(VIN65 web service)
+        //(same as PS_SearchProductBySKU, but RETURN OBJECT is ONE LEVEL HIGHER)(gives IsSuccessful, Errors, RecordCount properties)
+        public PS_Response1 PS_SearchProductBySKU2(string sku)
+        {
+            //*** see constructor for instantiated objects... ***
+
+            try
+            {
+                //request.SKU = "739242";                     //set the SKU to search for...
+                ps_request1.SKU = sku;
+                //********************************************
+                ps_response1 = ps.SearchProducts(ps_request1);
+                //********************************************
+                //System.InvalidOperationException: 'There is an error in XML document (5, 6).'
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return ps_response1;
+        }
+
+        //METHOD (search for ALL Products)(VIN65 web service)
+        public List<PS_Product1> PS_SearchAllProducts()
+        {
+            //*** see constructor for instantiated objects... ***
+
+            //create a list of PRODUCTS
+            List<PS_Product1> products = new List<PS_Product1>();
+
+            try
+            {
+                //********************************************
+                //TO CALL (ONE PRODUCT)(omit to call ALL PRODUCTS)
+                ps_response1 = ps.SearchProducts(ps_request1);
+                //********************************************
+
+                //TEST IF THE QUERY WAS SUCCESSFUL
+                if ((bool)ps_response1.IsSuccessful)
+                {
+                    for (int i = 0; i < ps_response1.RecordCount; i++)
+                    {
+                        products.Add(ps_response1.Products[i]);  //add each product to (list)
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return products;
+        }
+
+        //METHOD (search for ALL Products)(VIN65 web service)
+        //(same as PS_SearchAllProducts, but RETURN OBJECT is ONE LEVEL HIGHER)(gives IsSuccessful, Errors, RecordCount properties)
+        public PS_Response1 PS_SearchAllProducts2()
+        {
+            //*** see constructor for instantiated objects... ***
+
+            try
+            {
+                //********************************************
+                //to call (one product)(omit to call all products)
+                ps_response1 = ps.SearchProducts(ps_request1);
+                //********************************************
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return ps_response1;
+        }
+
+        //*****************************************************************************************************************
+        //*****************************************************************************************************************
+
+        //??????????????????????
+        //METHOD (push product data back to VIN65)
+        public void PushProductEpicorToVin65()
+        {
+            //??????????
+            //DO (GetProductDetailsBySKU) before PUSH UPDATE (otherwise may blank out info in the system)
+
+            //public PS_Response2 AddUpdateProductDetail(PS_Request2 Request) {
+
+            PS_ProductServiceService pss = new PS_ProductServiceService();
+            //need PS_Request2 object to pass to method...
+            PS_Request2 request = new PS_Request2();
+            Product product = new Product();
+            //product.
+            //request.Mode;
+            //request.Product;        //product object
+            //request.Security;       //security info?(username? password?)
+
+
+            //pss.AddUpdateProductDetail();
+        }
+        //??????????????????????
+
+        ////CREATE XML FROM (LIST OF PRODUCTS)
+        //public void PS_ProductToXmlFile(PS_Product1 product)
+        //{
+        //    XmlSerializer xs = new XmlSerializer(typeof(PS_Product1));
+
+        //    //DATE 
+        //    DateTime date = DateTime.Now;
+        //    //string date_format = "yyyyMMdd";
+        //    string date_format = "yyyyMMdd_hhmm";   //DATE: year/month/day_hours/seconds
+        //    //XML PATH
+        //    string path = @"c:\_temp\response" + date.ToString(date_format) + ".xml";
+
+
+        //    TextWriter tw = new StreamWriter(path);
+        //    xs.Serialize(tw, product);
+        //}
+
+
+    }
+}

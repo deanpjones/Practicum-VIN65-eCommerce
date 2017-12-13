@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:impl="http://V300" xmlns:tns2="http://request.base.V300" xmlns:tns4="http://_inventory.inventory.V300" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:tns1="http://searchInventory.inventory.V300" xmlns:tns3="http://response.base.V300" xmlns:tns6="http://updateInventory.inventory.V300" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns5="http://rpc.xml.coldfusion" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:intf="http://V300" targetNamespace="http://V300" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://request.base.V300">
+      <xsd:import namespace="http://V300" />
+      <xsd:import namespace="http://_inventory.inventory.V300" />
+      <xsd:import namespace="http://rpc.xml.coldfusion" />
+      <xsd:import namespace="http://updateInventory.inventory.V300" />
+      <xsd:import namespace="http://searchInventory.inventory.V300" />
+      <xsd:import namespace="http://response.base.V300" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="Security">
+        <xsd:sequence>
+          <xsd:element name="Password" nillable="true" type="xsd:string" />
+          <xsd:element name="Username" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Request">
+        <xsd:sequence>
+          <xsd:element name="Security" nillable="true" type="tns2:Security" />
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://searchInventory.inventory.V300">
+      <xsd:import namespace="http://V300" />
+      <xsd:import namespace="http://request.base.V300" />
+      <xsd:import namespace="http://_inventory.inventory.V300" />
+      <xsd:import namespace="http://rpc.xml.coldfusion" />
+      <xsd:import namespace="http://updateInventory.inventory.V300" />
+      <xsd:import namespace="http://response.base.V300" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="Request">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns2:Request">
+            <xsd:sequence>
+              <xsd:element name="Filter" nillable="true" type="xsd:string" />
+              <xsd:element name="InventoryPool" nillable="true" type="xsd:string" />
+              <xsd:element name="InventoryPoolID" nillable="true" type="xsd:string" />
+              <xsd:element name="MaxRows" nillable="true" type="xsd:double" />
+              <xsd:element name="Page" nillable="true" type="xsd:double" />
+              <xsd:element name="SKU" nillable="true" type="xsd:string" />
+              <xsd:element name="WebsiteIDs" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Response">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns3:Response">
+            <xsd:sequence>
+              <xsd:element name="Inventory" nillable="true" type="intf:ArrayOf_tns4_Inventory" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://response.base.V300">
+      <xsd:import namespace="http://V300" />
+      <xsd:import namespace="http://request.base.V300" />
+      <xsd:import namespace="http://_inventory.inventory.V300" />
+      <xsd:import namespace="http://rpc.xml.coldfusion" />
+      <xsd:import namespace="http://updateInventory.inventory.V300" />
+      <xsd:import namespace="http://searchInventory.inventory.V300" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="Error">
+        <xsd:sequence>
+          <xsd:element name="ErrorCode" nillable="true" type="xsd:string" />
+          <xsd:element name="ErrorMessage" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Response">
+        <xsd:sequence>
+          <xsd:element name="Errors" nillable="true" type="intf:ArrayOf_tns3_Error" />
+          <xsd:element name="IsSuccessful" nillable="true" type="xsd:boolean" />
+          <xsd:element name="RecordCount" nillable="true" type="xsd:double" />
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://V300">
+      <xsd:import namespace="http://request.base.V300" />
+      <xsd:import namespace="http://_inventory.inventory.V300" />
+      <xsd:import namespace="http://rpc.xml.coldfusion" />
+      <xsd:import namespace="http://updateInventory.inventory.V300" />
+      <xsd:import namespace="http://searchInventory.inventory.V300" />
+      <xsd:import namespace="http://response.base.V300" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="ArrayOf_tns3_Error">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns3:Error[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns4_Inventory">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns4:Inventory[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://_inventory.inventory.V300">
+      <xsd:import namespace="http://V300" />
+      <xsd:import namespace="http://request.base.V300" />
+      <xsd:import namespace="http://rpc.xml.coldfusion" />
+      <xsd:import namespace="http://updateInventory.inventory.V300" />
+      <xsd:import namespace="http://searchInventory.inventory.V300" />
+      <xsd:import namespace="http://response.base.V300" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="Inventory">
+        <xsd:sequence>
+          <xsd:element name="CurrentInventory" nillable="true" type="xsd:double" />
+          <xsd:element name="InventoryPool" nillable="true" type="xsd:string" />
+          <xsd:element name="InventoryPoolID" nillable="true" type="xsd:string" />
+          <xsd:element name="SKU" nillable="true" type="xsd:string" />
+          <xsd:element name="WebsiteID" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://rpc.xml.coldfusion">
+      <xsd:import namespace="http://V300" />
+      <xsd:import namespace="http://request.base.V300" />
+      <xsd:import namespace="http://_inventory.inventory.V300" />
+      <xsd:import namespace="http://updateInventory.inventory.V300" />
+      <xsd:import namespace="http://searchInventory.inventory.V300" />
+      <xsd:import namespace="http://response.base.V300" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="CFCInvocationException">
+        <xsd:sequence />
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://updateInventory.inventory.V300">
+      <xsd:import namespace="http://V300" />
+      <xsd:import namespace="http://request.base.V300" />
+      <xsd:import namespace="http://_inventory.inventory.V300" />
+      <xsd:import namespace="http://rpc.xml.coldfusion" />
+      <xsd:import namespace="http://searchInventory.inventory.V300" />
+      <xsd:import namespace="http://response.base.V300" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="Request">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns2:Request">
+            <xsd:sequence>
+              <xsd:element name="Inventory" nillable="true" type="tns4:Inventory" />
+              <xsd:element name="Mode" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Response">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns3:Response">
+            <xsd:sequence />
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="UpdateInventoryResponse">
+    <wsdl:part name="UpdateInventoryReturn" type="tns6:Response" />
+  </wsdl:message>
+  <wsdl:message name="CFCInvocationException">
+    <wsdl:part name="fault" type="tns5:CFCInvocationException" />
+  </wsdl:message>
+  <wsdl:message name="SearchInventoryRequest">
+    <wsdl:part name="Request" type="tns1:Request" />
+  </wsdl:message>
+  <wsdl:message name="SearchInventoryResponse">
+    <wsdl:part name="SearchInventoryReturn" type="tns1:Response" />
+  </wsdl:message>
+  <wsdl:message name="UpdateInventoryRequest">
+    <wsdl:part name="Request" type="tns6:Request" />
+  </wsdl:message>
+  <wsdl:portType name="InventoryService">
+    <wsdl:operation name="SearchInventory" parameterOrder="Request">
+      <wsdl:input name="SearchInventoryRequest" message="intf:SearchInventoryRequest" />
+      <wsdl:output name="SearchInventoryResponse" message="intf:SearchInventoryResponse" />
+      <wsdl:fault name="CFCInvocationException" message="intf:CFCInvocationException" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateInventory" parameterOrder="Request">
+      <wsdl:input name="UpdateInventoryRequest" message="intf:UpdateInventoryRequest" />
+      <wsdl:output name="UpdateInventoryResponse" message="intf:UpdateInventoryResponse" />
+      <wsdl:fault name="CFCInvocationException" message="intf:CFCInvocationException" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="InventoryService.cfcSoapBinding" type="intf:InventoryService">
+    <wsdlsoap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="SearchInventory">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="SearchInventoryRequest">
+        <wsdlsoap:body use="encoded" namespace="http://V300" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="SearchInventoryResponse">
+        <wsdlsoap:body use="encoded" namespace="http://V300" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="CFCInvocationException">
+        <wsdlsoap:fault use="encoded" name="CFCInvocationException" namespace="http://V300" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateInventory">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="UpdateInventoryRequest">
+        <wsdlsoap:body use="encoded" namespace="http://V300" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="UpdateInventoryResponse">
+        <wsdlsoap:body use="encoded" namespace="http://V300" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="CFCInvocationException">
+        <wsdlsoap:fault use="encoded" name="CFCInvocationException" namespace="http://V300" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="InventoryServiceService">
+    <wsdl:port name="InventoryService.cfc" binding="intf:InventoryService.cfcSoapBinding">
+      <wsdlsoap:address location="http://webservices.vin65.com/V300/InventoryService.cfc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

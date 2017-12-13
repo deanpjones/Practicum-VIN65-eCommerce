@@ -1,0 +1,33 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="vin65WS2.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="vin65WS2_com_vin65_webservicesProduct_ProductServiceService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://webservices.vin65.com/V300/ProductService.cfc</Value>
+    </Setting>
+    <Setting Name="vin65WS2_com_vin65_webservicesOrder_OrderServiceService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://webservices.vin65.com/V301/OrderService.cfc</Value>
+    </Setting>
+    <Setting Name="vin65WS2_com_vin65_webservicesInventory_InventoryServiceService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://webservices.vin65.com/V300/InventoryService.cfc</Value>
+    </Setting>
+    <Setting Name="vin65WS2_com_vin65_webservicesContact_ContactServiceService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://webservices.vin65.com/V300/ContactService.cfc</Value>
+    </Setting>
+    <Setting Name="VIN65WS_Username" Type="System.String" Scope="User">
+      <Value Profile="(Default)">DeanJonesSANDBOX</Value>
+    </Setting>
+    <Setting Name="VIN65WS_Password" Type="System.String" Scope="User">
+      <Value Profile="(Default)">willowpark</Value>
+    </Setting>
+    <Setting Name="XmlPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\_temp</Value>
+    </Setting>
+    <Setting Name="ColorPrimary" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#99B6CC</Value>
+    </Setting>
+    <Setting Name="ColorSecondary" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#3A617F</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
